@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <section class="nav">
+      <h2 class="hostel">yabatech hostel</h2>
+  <nav id="menu">
+    <li><a href="index.html">home</a></li>
+    <li><a href="about.html">about</a></li>
+    <li><a href="facilities.html">facilities</a></li>
+    <li><a href="contact.html">contact</a></li>
+    <button id="btn1">sign in</button>
+  </nav>  
+  <div class="menu-bar" id="menu-bar">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+    </section>
+    <section class="about">
+        <h3 class="Abt">reshaping the future</h3>
+        <p class="about-us">
+            Yabatech Hostel is a place where students can find comfort
+             and a sense of belonging while pursuing their academic journey.<br> we understand the importance of a 
+             supportive and inclusive evironmemt for students to thrive academically and personally.
+        </p>
+    </section>
+    <div class="abt-image">
+          <img src="Building.png";>
+        </div>
+    <section class="our-story">
+        <div class="story">
+            <h3 class="yaba-story"> our story</h3>
+            <p class="sty">From our historic foundations in 1947 to today's modern expansions,we've spent decades
+                shaping the ultimate hostel living experience for our students.
+            </p>
+        </div>
+        <div class="story2">
+            <img src="building2.png">
+        </div> 
+    </section>
+    <h3 class="mission">our mission</h3>
+    <section class="our-mission1">
+        <div class="miss-on1">
+            <p class="miss1"> Providing conducive and supportive home base so they can focus entirely on their education, without worrying 
+            about where they coming from.
+        </p>
+        </div>
+        <div class="mission-image1">
+            <img src="building3.png">
+        </div>
+    </section>
+    <section class="our-mission2">
+        <div class="our-mission02">
+            <p class="miss2">Reliable 24/7 power supply through advanced solar & electrical solutions
+                keeping the hostel powered always.
+            </p>
+        </div>
+        <div class="mission-image2" >
+            <img src="building4.png" width:40%;>
+            <img src="building5.png" width:40%;>
+        </div>
+        
+    </section>
+    <h3 class="mission1">priortize our students </h3>
+    <p class="mission2">channels to make complaints</p>
+    <section class="our-mission3">
+        <p class="miss01">
+            "i made complain to the hostel management,concerning<br> 
+            my bed that i was using in the hostel. The next day i
+            received a replacment."<b>Ebube oliver 200 level """</b> 
+        </p>
+        <p class="miss02">
+            "There was an electrical fault in my room,
+            so i made complain about<br> it and
+             i was attended to immediately."<b> Oluwatosin emmaneul  300 level """</b>
+        </p>
+    </section>
+    <section class="become">
+        <h3 class="member"> become a member </h3>
+        <p class="member1">secure your spot in our vibrant community and experience the comfort and convienience of living in our hostel
+      </p>
+      <button id="btn1">apply for a room >>>></button>
+    </section>
+    <footer>
+    <p class="foot">&copy 2026 yabatech hostel. all rights reserved.</p>
+  </footer>
+
+    <script>
+    const menuBar = document.getElementById("menu-bar");
+    const menu = document.getElementById("menu");
+    menuBar.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+  </body>
+  </html>

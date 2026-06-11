@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <section class="nav">
+      <h2 class="hostel">yabatech hostel</h2>
+  <nav id="menu">
+    <li><a href="index.html">home</a></li>
+    <li><a href="about.html">about</a></li>
+    <li><a href="facilities.html">facilities</a></li>
+    <li><a href="contact.html">contact</a></li>
+    <button id="btn1">sign in</button>
+  </nav>  
+  <div class="menu-bar" id="menu-bar">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+    </section>
+    <script>
+    const menuBar = document.getElementById("menu-bar");
+    const menu = document.getElementById("menu");
+    menuBar.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+    </body>
+  </html>
