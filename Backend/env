@@ -1,0 +1,7 @@
+PORT=10000
+NODE_ENV=production
+JWT_SECRET=yabatech_hostel_secret_2026_render
+JWT_EXPIRES_IN=7d
+ADMIN_EMAIL=admin@yabatechhostel.edu.ng
+ADMIN_PASSWORD=admin123
+DB_PATH=./database/hostel.db
