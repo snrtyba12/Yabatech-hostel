@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — YabaTech Hostel</title>
+  <link rel="stylesheet" href="static/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+</head>
+<body>
+
+<div class="login-card">
+
+  <a href="index.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Back to Website
+  </a>
+
+  <div class="card-top">
+    <div class="logo-icon">🏠</div>
+    <div class="admin-badge"><i class="fa-solid fa-shield-halved"></i> Admin Access</div>
+    <h1>Admin Login</h1>
+    <p>Sign in to the YabaTech management portal</p>
+  </div>
+
+  <div class="divider"><span>Enter your credentials</span></div>
+
+  <!-- ERROR BANNER -->
+  <div class="error-banner" id="errorBanner">
+    <i class="fa-solid fa-circle-exclamation"></i>
+    <span id="errorMsg">Invalid email or password. Please try again.</span>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-group">
+    <label for="adminEmail">Name</label>
+    <div class="input-wrap">
+      <i class="fa-solid fa-envelope"></i>
+      <input
+        type="name"
+        id="adminEmail"
+        placeholder="adminyabatechhostel.ng"
+        autocomplete="name"
+      />
+    </div>
+    <div class="field-error" id="emailError">Please enter a valid email address.</div>
+  </div>
+
+  <div class="form-group">
+    <label for="adminPassword">Password</label>
+    <div class="input-wrap">
+      <i class="fa-solid fa-lock"></i>
+      <input
+        type="password"
+        id="adminPassword"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      />
+      <button class="toggle-pw" onclick="togglePassword('adminPassword', this)" type="button">
+        <i class="fa-solid fa-eye"></i>
+      </button>
+    </div>
+    <div class="field-error" id="passwordError">Please enter your password.</div>
+  </div>
+
+  <div class="options-row">
+    <label class="remember">
+      <input type="checkbox" id="rememberMe"/> Remember me
+    </label>
+    <a href="#" class="forgot-link">Forgot password?</a>
+  </div>
+
+  <button class="submit-btn" id="loginBtn" onclick="handleAdminLogin()">
+    Sign In to Dashboard
+  </button>
+
+  <div class="security-note">
+    <i class="fa-solid fa-lock"></i>
+    Secured · Admin access only · All activity is logged
+  </div>
+
+  <div class="card-footer">
+    Not an admin? <a href="studentlogin.html">Student Login →</a>
+  </div>
+
+</div>
+
+<script>
+  function togglePassword(id, btn) {
+    const input = document.getElementById(id);
+    const icon  = btn.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+  }
+
+  function handleAdminLogin() {
+    const nameField = document.getElementById('adminEmail');
+    const passField = document.getElementById('adminPassword');
+    const banner    = document.getElementById('errorBanner');
+
+    const name     = nameField.value.trim();
+    const password = passField.value.trim();
+
+    // Hide previous error
+    banner.classList.remove('show');
+    banner.style.display = 'none';
+
+    // Basic validation
+    if (!name) {
+      document.getElementById('emailError').style.display = 'block';
+      return;
+    } else {
+      document.getElementById('emailError').style.display = 'none';
+    }
+
+    if (!password) {
+      document.getElementById('passwordError').style.display = 'block';
+      return;
+    } else {
+      document.getElementById('passwordError').style.display = 'none';
+    }
+
+    // ── Save name to localStorage ──
+    // Capitalise first letter of each word e.g. "mr francis" → "Mr Francis"
+    const displayName = name
+      .split(' ')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(' ');
+
+    localStorage.setItem('adminName',    displayName);
+    localStorage.setItem('adminInitial', displayName.charAt(0).toUpperCase());
+    localStorage.setItem('adminLoggedIn', 'true');
+
+    // ── Redirect to dashboard ──
+    window.location.href = 'admin.html';
+  }
+</script>
+</body>
+</html>
