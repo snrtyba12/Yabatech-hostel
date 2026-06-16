@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <title>Admin — YabaTech Hostel</title>
+</head>
+<body class="admin-body">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h2>YabaTech <span>Admin</span></h2>
+    <p>Hostel Management System</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Main</div>
+    <a href="#" class="active" onclick="showPage('dashboard', this)"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+    <a href="#" onclick="showPage('applications', this)"><i class="fa-solid fa-file-lines"></i> Applications</a>
+    <a href="#" onclick="showPage('rooms', this)"><i class="fa-solid fa-bed"></i> Rooms</a>
+    <a href="#" onclick="showPage('residents', this)"><i class="fa-solid fa-users"></i> Residents</a>
+    <div class="nav-label">Communication</div>
+    <a href="#" onclick="showPage('messages', this)"><i class="fa-solid fa-envelope"></i> Messages <span style="margin-left:auto;background:var(--red);color:white;font-size:0.65rem;padding:0.1rem 0.5rem;border-radius:20px;">4</span></a>
+    <a href="#" onclick="showPage('announcements', this)"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <div class="nav-label">Finance</div>
+    <a href="#" onclick="showPage('payments', this)"><i class="fa-solid fa-naira-sign"></i> Payments</a>
+    <div class="nav-label">Settings</div>
+    <a href="#" onclick="showPage('settings', this)"><i class="fa-solid fa-gear"></i> Settings</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="admin-profile">
+      <div class="admin-avatar" id="sidebarInitial">?</div>
+      <div><div class="admin-name" id="sidebarName">Loading…</div><div class="admin-role">Hostel Manager</div></div>
+      <button class="logout-btn" title="Logout" onclick="adminLogout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1 id="page-title">Dashboard</h1>
+      <p id="page-sub">Welcome back, <span id="topbarName">—</span>. Here's what's happening today.</p>
+    </div>
+    <div class="topbar-right">
+      <button class="notif-btn" title="Notifications"><i class="fa-solid fa-bell"></i><span class="notif-badge"></span></button>
+      <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="content page-section active" id="page-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card"><div><div class="stat-label">Total Residents</div><div class="stat-value" id="statResidents">482</div><div class="stat-sub">↑ 12 this semester</div></div><div class="stat-icon icon-green"><i class="fa-solid fa-users"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">Pending Applications</div><div class="stat-value" id="statPending">18</div><div class="stat-sub">Needs review</div></div><div class="stat-icon icon-yellow"><i class="fa-solid fa-clock"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">Rooms Occupied</div><div class="stat-value" id="statOccupancy">94%</div><div class="stat-sub">188 of 200 rooms</div></div><div class="stat-icon icon-blue"><i class="fa-solid fa-bed"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">New Messages</div><div class="stat-value" id="statMessages">4</div><div class="stat-sub">Unread enquiries</div></div><div class="stat-icon icon-red"><i class="fa-solid fa-envelope"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">Revenue This Sem</div><div class="stat-value" id="statRevenue">₦14.2M</div><div class="stat-sub">↑ 8% vs last sem</div></div><div class="stat-icon icon-purple"><i class="fa-solid fa-naira-sign"></i></div></div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-header"><div><h3>Recent Applications</h3><p>Latest room booking requests</p></div><a href="#" class="view-all" onclick="showPage('applications', document.querySelector('[onclick*=applications]'))">View All</a></div>
+        <div class="table-wrap"><table><thead><tr><th>Name</th><th>Room</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="dashApplications"></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Room Occupancy</h3><p>Current session</p></div></div>
+        <div class="card-body"><div class="room-list" id="dashOccupancy"></div></div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div><h3>Recent Messages</h3><p>Unread contact enquiries</p></div><a href="#" class="view-all" onclick="showPage('messages', document.querySelector('[onclick*=messages]'))">View All</a></div>
+        <div class="card-body"><div class="msg-list" id="dashMessages"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Quick Actions</h3><p>Common admin tasks</p></div></div>
+        <div class="card-body">
+          <div class="quick-actions">
+            <button class="qa-btn" onclick="showPage('applications', document.querySelectorAll('.sidebar-nav a')[1])"><i class="fa-solid fa-file-circle-plus"></i> Review Applications</button>
+            <button class="qa-btn" onclick="showPage('announcements', document.querySelectorAll('.sidebar-nav a')[6])"><i class="fa-solid fa-bullhorn"></i> Post Announcement</button>
+            <button class="qa-btn" onclick="showPage('rooms', document.querySelectorAll('.sidebar-nav a')[2])"><i class="fa-solid fa-bed"></i> Manage Rooms</button>
+            <button class="qa-btn" onclick="showPage('payments', document.querySelectorAll('.sidebar-nav a')[7])"><i class="fa-solid fa-naira-sign"></i> View Payments</button>
+            <button class="qa-btn" onclick="showPage('residents', document.querySelectorAll('.sidebar-nav a')[3])"><i class="fa-solid fa-users"></i> View Residents</button>
+            <button class="qa-btn" onclick="showPage('messages', document.querySelectorAll('.sidebar-nav a')[4])"><i class="fa-solid fa-envelope"></i> Read Messages</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATIONS -->
+  <div class="content page-section" id="page-applications">
+    <div class="search-bar">
+      <input class="search-input" type="text" id="appSearch" placeholder="Search by name or email…" oninput="filterApplications()"/>
+      <select class="search-select" id="appStatusFilter" onchange="filterApplications()"><option>All Statuses</option><option>Pending</option><option>Confirmed</option><option>Rejected</option></select>
+      <select class="search-select" id="appRoomFilter" onchange="filterApplications()"><option>All Room Types</option><option>Single</option><option>Double</option><option>Triple</option><option>Quad</option></select>
+      <button class="search-btn" onclick="filterApplications()">Search</button>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><h3>All Applications</h3><p id="appCount">18 pending review</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>#</th><th>Applicant</th><th>Email</th><th>Phone</th><th>Room</th><th>Session</th><th>Gender</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="applicationsTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ROOMS -->
+  <div class="content page-section" id="page-rooms">
+    <div class="card">
+      <div class="card-header"><div><h3>Room Management</h3><p>All room types and availability</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Room Type</th><th>Capacity</th><th>Total Rooms</th><th>Occupied</th><th>Available</th><th>Price / Sem</th><th>Status</th></tr></thead><tbody id="roomsTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- RESIDENTS -->
+  <div class="content page-section" id="page-residents">
+    <div class="search-bar">
+      <input class="search-input" type="text" id="resSearch" placeholder="Search residents…" oninput="filterResidents()"/>
+      <select class="search-select" id="resGenderFilter" onchange="filterResidents()"><option>All Genders</option><option>Male</option><option>Female</option></select>
+      <button class="search-btn" onclick="filterResidents()">Search</button>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><h3>Current Residents</h3><p id="resCount">482 residents this session</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Room</th><th>School</th><th>Level</th><th>Gender</th><th>Move-in</th><th>Status</th></tr></thead><tbody id="residentsTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="content page-section" id="page-messages">
+    <div class="card">
+      <div class="card-header"><div><h3>Contact Messages</h3><p id="msgCount">4 unread messages</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>From</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Action</th></tr></thead><tbody id="messagesTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENTS -->
+  <div class="content page-section" id="page-announcements">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="card-header"><div><h3>Post New Announcement</h3></div></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <input class="search-input" type="text" id="annTitle" placeholder="Announcement title…" style="width:100%;"/>
+          <textarea id="annBody" placeholder="Write your announcement here…" style="width:100%;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;height:100px;resize:vertical;outline:none;"></textarea>
+          <button class="search-btn" style="width:fit-content;" id="postAnnBtn" onclick="postAnnouncement()"><i class="fa-solid fa-paper-plane"></i> Post Announcement</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><h3>Previous Announcements</h3></div></div>
+      <div class="card-body" id="announcementsList"></div>
+    </div>
+  </div>
+
+  <!-- PAYMENTS -->
+  <div class="content page-section" id="page-payments">
+    <div class="stats-grid" style="margin-bottom:1.5rem;">
+      <div class="stat-card"><div><div class="stat-label">Total Collected</div><div class="stat-value" id="payTotalCollected">₦14.2M</div><div class="stat-sub">This semester</div></div><div class="stat-icon icon-green"><i class="fa-solid fa-naira-sign"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">Pending Payment</div><div class="stat-value" id="payPending">₦1.8M</div><div class="stat-sub">23 residents</div></div><div class="stat-icon icon-yellow"><i class="fa-solid fa-clock"></i></div></div>
+      <div class="stat-card"><div><div class="stat-label">Fully Paid</div><div class="stat-value" id="payFullyPaid">459</div><div class="stat-sub">Residents</div></div><div class="stat-icon icon-blue"><i class="fa-solid fa-check"></i></div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><h3>Payment Records</h3></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Resident</th><th>Room</th><th>Amount</th><th>Date Paid</th><th>Method</th><th>Status</th></tr></thead><tbody id="paymentsTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="content page-section" id="page-settings">
+    <div class="card" style="max-width:600px;">
+      <div class="card-header"><div><h3>Admin Settings</h3><p>Manage your account and hostel info</p></div></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:1.2rem;">
+          <div><label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:0.4rem;">Hostel Name</label><input class="search-input" style="width:100%;" id="setHostelName" value="Yabatech Student Hostel"/></div>
+          <div><label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:0.4rem;">Admin Email</label><input class="search-input" style="width:100%;" id="setAdminEmail" value="info@Yabatechhostel.ng"/></div>
+          <div><label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:0.4rem;">Phone Number</label><input class="search-input" style="width:100%;" id="setPhone" value="+234 801 234 5678"/></div>
+          <div><label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:0.4rem;">Current Password</label><input class="search-input" style="width:100%;" type="password" id="setCurrentPw" placeholder="Enter current password"/></div>
+          <div><label style="font-size:0.83rem;font-weight:600;display:block;margin-bottom:0.4rem;">New Password</label><input class="search-input" style="width:100%;" type="password" id="setNewPw" placeholder="Enter new password"/></div>
+          <button class="search-btn" id="saveSettingsBtn" onclick="saveSettings()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-footer">© 2026 YabaTech Student Hostel · Admin Panel · All rights reserved</div>
+</div>
+
+<script>
+  // ════════════════════════════════════════════════════════════
+  //  API BASE URL — UPDATE THIS WITH YOUR RENDER URL
+  // ════════════════════════════════════════════════════════════
+  const API_BASE = 'https://your-render-url.onrender.com/api';
+  // ════════════════════════════════════════════════════════════
+
+  function getAuthHeaders() {
+    const token = localStorage.getItem('adminToken');
+    return { 'Content-Type':'application/json', 'Authorization': token ? `Bearer ${token}` : '' };
+  }
+
+  if (!localStorage.getItem('adminLoggedIn') || !localStorage.getItem('adminToken')) {
+    window.location.href = 'adminlogin.html';
+  }
+
+  const adminName = localStorage.getItem('adminName') || 'Admin';
+  const adminInitial = localStorage.getItem('adminInitial') || 'A';
+  document.getElementById('sidebarName').textContent = adminName;
+  document.getElementById('sidebarInitial').textContent = adminInitial;
+  document.getElementById('topbarName').textContent = adminName;
+
+  const pageTitles = {
+    dashboard: ['Dashboard', 'Welcome back, ' + adminName + ". Here's what's happening today."],
+    applications: ['Applications', 'Review and manage all room booking requests.'],
+    rooms: ['Rooms', 'Manage room types, availability and pricing.'],
+    residents: ['Residents', 'View and manage all current hostel residents.'],
+    messages: ['Messages', 'Read and reply to contact form submissions.'],
+    announcements: ['Announcements', 'Post and manage notices to all residents.'],
+    payments: ['Payments', 'Track all room fee payments and outstanding balances.'],
+    settings: ['Settings', 'Update hostel information and admin account.']
+  };
+
+  function showPage(page, linkEl) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.add('active');
+    if (pageTitles[page]) {
+      document.getElementById('page-title').textContent = pageTitles[page][0];
+      document.getElementById('page-sub').textContent = pageTitles[page][1];
+    }
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    if (linkEl) linkEl.classList.add('active');
+    document.getElementById('sidebar').classList.remove('open');
+    return false;
+  }
+
+  function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+  document.addEventListener('click', (e) => {
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.querySelector('.hamburger-btn');
+    if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+      sidebar.classList.remove('open');
+    }
+  });
+
+  function adminLogout() {
+    localStorage.removeItem('adminName');
+    localStorage.removeItem('adminInitial');
+    localStorage.removeItem('adminLoggedIn');
+    localStorage.removeItem('adminToken');
+    window.location.href = 'adminlogin.html';
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     LOAD DASHBOARD DATA
+  ════════════════════════════════════════════════════════════ */
+  async function loadDashboard() {
+    try {
+      const [statsRes, appsRes, occRes, msgRes] = await Promise.all([
+        fetch(`${API_BASE}/admin/stats`, { headers: getAuthHeaders() }),
+        fetch(`${API_BASE}/admin/applications?limit=5`, { headers: getAuthHeaders() }),
+        fetch(`${API_BASE}/admin/occupancy`, { headers: getAuthHeaders() }),
+        fetch(`${API_BASE}/admin/messages?limit=4`, { headers: getAuthHeaders() })
+      ]);
+
+      if (statsRes.ok) {
+        const stats = await statsRes.json();
+        document.getElementById('statResidents').textContent = stats.totalResidents || '482';
+        document.getElementById('statPending').textContent = stats.pendingApplications || '18';
+        document.getElementById('statOccupancy').textContent = (stats.occupancyRate || 94) + '%';
+        document.getElementById('statMessages').textContent = stats.unreadMessages || '4';
+        document.getElementById('statRevenue').textContent = '₦' + (stats.revenue || '14.2M');
+      }
+
+      if (appsRes.ok) {
+        const data = await appsRes.json();
+        renderDashApplications(data.applications || []);
+      }
+
+      if (occRes.ok) {
+        const data = await occRes.json();
+        renderDashOccupancy(data.rooms || []);
+      }
+
+      if (msgRes.ok) {
+        const data = await msgRes.json();
+        renderDashMessages(data.messages || []);
+      }
+    } catch (err) { console.error('Dashboard load error:', err); }
+  }
+
+  function renderDashApplications(apps) {
+    const tbody = document.getElementById('dashApplications');
+    tbody.innerHTML = apps.map(a => `
+      <tr>
+        <td><strong>${a.name}</strong><br/><span style="font-size:0.75rem;color:var(--muted)">${a.school} · ${a.level}</span></td>
+        <td>${a.roomType}</td>
+        <td>${a.date}</td>
+        <td><span class="badge badge-${a.status.toLowerCase()}">${a.status}</span></td>
+        <td>
+          ${a.status === 'Pending' ? `
+            <div class="action-btns">
+              <button class="act-btn act-confirm" onclick="updateApplication('${a.id}', 'Confirmed')">✓</button>
+              <button class="act-btn act-reject" onclick="updateApplication('${a.id}', 'Rejected')">✕</button>
+            </div>
+          ` : '<button class="act-btn act-view">View</button>'}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function renderDashOccupancy(rooms) {
+    const container = document.getElementById('dashOccupancy');
+    container.innerHTML = rooms.map(r => `
+      <div class="room-row">
+        <div class="room-row-top"><span class="room-name">${r.type} Room</span><span class="room-count">${r.occupied}/${r.total}</span></div>
+        <div class="progress-bar"><div class="progress-fill ${r.occupied/r.total > 0.9 ? 'fill-yellow' : 'fill-green'}" style="width:${(r.occupied/r.total*100)}%"></div></div>
+      </div>
+    `).join('');
+  }
+
+  function renderDashMessages(msgs) {
+    const container = document.getElementById('dashMessages');
+    container.innerHTML = msgs.map(m => `
+      <div class="msg-item">
+        <div class="msg-avatar" style="background:${m.avatarBg || '#d8f3dc'};">${m.avatar || '👤'}</div>
+        <div class="msg-body">
+          <div class="msg-name">${m.name} ${m.isNew ? '<span class="badge badge-new" style="margin-left:4px;">New</span>' : ''}</div>
+          <div class="msg-subject">${m.subject}</div>
+        </div>
+        <div class="msg-time">${m.time}</div>
+      </div>
+    `).join('');
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     APPLICATIONS PAGE
+  ════════════════════════════════════════════════════════════ */
+  let allApplications = [];
+  async function loadApplications() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/applications`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      allApplications = data.applications || [];
+      document.getElementById('appCount').textContent = allApplications.filter(a => a.status === 'Pending').length + ' pending review';
+      filterApplications();
+    } catch (err) { console.error('Applications load error:', err); }
+  }
+
+  function filterApplications() {
+    const search = document.getElementById('appSearch').value.toLowerCase();
+    const status = document.getElementById('appStatusFilter').value;
+    const room = document.getElementById('appRoomFilter').value;
+    const filtered = allApplications.filter(a => {
+      const matchSearch = !search || a.name.toLowerCase().includes(search) || a.email.toLowerCase().includes(search);
+      const matchStatus = status === 'All Statuses' || a.status === status;
+      const matchRoom = room === 'All Room Types' || a.roomType === room;
+      return matchSearch && matchStatus && matchRoom;
+    });
+    const tbody = document.getElementById('applicationsTable');
+    tbody.innerHTML = filtered.map((a, i) => `
+      <tr>
+        <td>${String(i+1).padStart(3,'0')}</td>
+        <td><strong>${a.name}</strong><br/><span style="font-size:0.73rem;color:var(--muted)">${a.school} · ${a.level}</span></td>
+        <td>${a.email}</td>
+        <td>${a.phone}</td>
+        <td>${a.roomType}</td>
+        <td>${a.session}</td>
+        <td>${a.gender}</td>
+        <td>${a.date}</td>
+        <td><span class="badge badge-${a.status.toLowerCase()}">${a.status}</span></td>
+        <td>
+          ${a.status === 'Pending' ? `
+            <div class="action-btns">
+              <button class="act-btn act-confirm" onclick="updateApplication('${a.id}', 'Confirmed')">Confirm</button>
+              <button class="act-btn act-reject" onclick="updateApplication('${a.id}', 'Rejected')">Reject</button>
+            </div>
+          ` : '<button class="act-btn act-view">View</button>'}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function updateApplication(id, status) {
+    try {
+      const res = await fetch(`${API_BASE}/admin/applications/${id}`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ status })
+      });
+      if (!res.ok) throw new Error('Failed');
+      loadApplications();
+      loadDashboard();
+    } catch (err) { alert('Failed to update application. Please try again.'); }
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     ROOMS PAGE
+  ════════════════════════════════════════════════════════════ */
+  async function loadRooms() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/rooms`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      const tbody = document.getElementById('roomsTable');
+      tbody.innerHTML = (data.rooms || []).map(r => `
+        <tr>
+          <td><strong>${r.type} Room</strong></td>
+          <td>${r.capacity}</td>
+          <td>${r.total}</td>
+          <td>${r.occupied}</td>
+          <td>${r.available}</td>
+          <td>₦${r.price.toLocaleString()}</td>
+          <td><span class="badge badge-${r.available < 3 ? 'pending' : 'confirmed'}">${r.available < 3 ? 'Almost Full' : 'Available'}</span></td>
+        </tr>
+      `).join('');
+    } catch (err) { console.error('Rooms load error:', err); }
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     RESIDENTS PAGE
+  ════════════════════════════════════════════════════════════ */
+  let allResidents = [];
+  async function loadResidents() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/residents`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      allResidents = data.residents || [];
+      document.getElementById('resCount').textContent = allResidents.length + ' residents this session';
+      filterResidents();
+    } catch (err) { console.error('Residents load error:', err); }
+  }
+
+  function filterResidents() {
+    const search = document.getElementById('resSearch').value.toLowerCase();
+    const gender = document.getElementById('resGenderFilter').value;
+    const filtered = allResidents.filter(r => {
+      const matchSearch = !search || r.name.toLowerCase().includes(search);
+      const matchGender = gender === 'All Genders' || r.gender === gender;
+      return matchSearch && matchGender;
+    });
+    const tbody = document.getElementById('residentsTable');
+    tbody.innerHTML = filtered.map((r, i) => `
+      <tr>
+        <td>${String(i+1).padStart(3,'0')}</td>
+        <td><strong>${r.name}</strong></td>
+        <td>${r.room}</td>
+        <td>${r.school}</td>
+        <td>${r.level}</td>
+        <td>${r.gender}</td>
+        <td>${r.moveIn}</td>
+        <td><span class="badge badge-confirmed">Active</span></td>
+      </tr>
+    `).join('');
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     MESSAGES PAGE
+  ════════════════════════════════════════════════════════════ */
+  async function loadMessages() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/messages`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      const msgs = data.messages || [];
+      document.getElementById('msgCount').textContent = msgs.filter(m => !m.read).length + ' unread messages';
+      const tbody = document.getElementById('messagesTable');
+      tbody.innerHTML = msgs.map(m => `
+        <tr>
+          <td><strong>${m.name}</strong></td>
+          <td>${m.email}</td>
+          <td>${m.subject}</td>
+          <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.message}</td>
+          <td>${m.date}</td>
+          <td><button class="act-btn act-confirm" onclick="replyMessage('${m.id}')">Reply</button></td>
+        </tr>
+      `).join('');
+    } catch (err) { console.error('Messages load error:', err); }
+  }
+
+  function replyMessage(id) {
+    const email = prompt('Enter your reply email:');
+    if (!email) return;
+    alert('Reply feature coming soon. Message ID: ' + id);
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     ANNOUNCEMENTS PAGE
+  ════════════════════════════════════════════════════════════ */
+  async function loadAnnouncements() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/announcements`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      const list = data.announcements || [];
+      const container = document.getElementById('announcementsList');
+      container.innerHTML = list.map(a => `
+        <div style="background:#f8fafc;border-radius:8px;padding:1rem;border-left:4px solid var(--green);margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:0.3rem;">${a.title}</div>
+          <div style="font-size:0.85rem;color:var(--muted);">${a.body}</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">Posted: ${a.date}</div>
+        </div>
+      `).join('');
+    } catch (err) { console.error('Announcements load error:', err); }
+  }
+
+  async function postAnnouncement() {
+    const title = document.getElementById('annTitle').value.trim();
+    const body = document.getElementById('annBody').value.trim();
+    const btn = document.getElementById('postAnnBtn');
+    if (!title || !body) { alert('Please fill in both title and body.'); return; }
+    btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Posting…';
+    try {
+      const res = await fetch(`${API_BASE}/admin/announcements`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ title, body })
+      });
+      if (!res.ok) throw new Error('Failed');
+      document.getElementById('annTitle').value = '';
+      document.getElementById('annBody').value = '';
+      alert('Announcement posted!');
+      loadAnnouncements();
+    } catch (err) { alert('Failed to post announcement.'); }
+    btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Post Announcement';
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     PAYMENTS PAGE
+  ════════════════════════════════════════════════════════════ */
+  async function loadPayments() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/payments`, { headers: getAuthHeaders() });
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById('payTotalCollected').textContent = '₦' + (data.totalCollected || '14.2M');
+      document.getElementById('payPending').textContent = '₦' + (data.pending || '1.8M');
+      document.getElementById('payFullyPaid').textContent = data.fullyPaid || '459';
+      const tbody = document.getElementById('paymentsTable');
+      tbody.innerHTML = (data.payments || []).map(p => `
+        <tr>
+          <td><strong>${p.name}</strong></td>
+          <td>${p.room}</td>
+          <td>₦${p.amount.toLocaleString()}</td>
+          <td>${p.date || '—'}</td>
+          <td>${p.method || '—'}</td>
+          <td><span class="badge badge-${p.status === 'paid' ? 'confirmed' : 'pending'}">${p.status === 'paid' ? 'Paid' : 'Pending'}</span></td>
+        </tr>
+      `).join('');
+    } catch (err) { console.error('Payments load error:', err); }
+  }
+
+  /* ════════════════════════════════════════════════════════════
+     SETTINGS PAGE
+  ════════════════════════════════════════════════════════════ */
+  async function saveSettings() {
+    const hostelName = document.getElementById('setHostelName').value.trim();
+    const email = document.getElementById('setAdminEmail').value.trim();
+    const phone = document.getElementById('setPhone').value.trim();
+    const currentPw = document.getElementById('setCurrentPw').value;
+    const newPw = document.getElementById('setNewPw').value;
+    const btn = document.getElementById('saveSettingsBtn');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      const payload = { hostelName, email, phone };
+      if (currentPw && newPw) {
+        payload.currentPassword = currentPw;
+        payload.newPassword = newPw;
+      }
+      const res = await fetch(`${API_BASE}/admin/settings`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Failed');
+      alert('Settings saved!');
+      document.getElementById('setCurrentPw').value = '';
+      document.getElementById('setNewPw').value = '';
+    } catch (err) { alert('Failed to save settings.'); }
+    btn.disabled = false; btn.textContent = 'Save Changes';
+  }
+
+  // Load all data on page load
+  loadDashboard();
+  loadApplications();
+  loadRooms();
+  loadResidents();
+  loadMessages();
+  loadAnnouncements();
+  loadPayments();
+</script>
+</body>
+</html>
