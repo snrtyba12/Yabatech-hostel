@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Yabatech Student Hostel</title>
+  <link rel="stylesheet" href="stylesheet.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <h2 class="hostel">Yabatech <span>Hostel</span></h2>
+    <ul id="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="facilities.html">Facilities</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><button class="nav-btn"><a href="studentlogin.html">Sign In</a></button></li>
+    </ul>
+    <div class="menu-bar" id="menu-bar">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </header>
+  <div class="gold-divider"></div>
+
+  <!-- Hero -->
+  <section class="about-hero">
+    <h3>Reshaping the Future</h3>
+    <p>Yabatech Hostel is a place where students can find comfort and a sense of belonging while pursuing their academic journey. We understand the importance of a supportive and inclusive environment for students to thrive academically and personally.</p>
+  </section>
+
+  <!-- Hero Image -->
+  <div class="about-image">
+    <img src="images/Building.png" alt="Yabatech Hostel Building">
+  </div>
+
+  <!-- Our Story -->
+  <section class="story-section">
+    <div class="story-text">
+      <h3>Our Story</h3>
+      <p>From our historic foundations in 1947 to today's modern expansions, we've spent decades shaping the ultimate hostel living experience for our students. What started as a small residence has grown into a vibrant community that houses hundreds of students from all walks of life.</p>
+    </div>
+    <div class="story-image">
+      <img src="images/building2.png" alt="Historic Building">
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="content-section">
+    <h2 class="section-title">Our Mission</h2>
+
+    <div class="mission-grid">
+      <div class="mission-text">
+        <p>Providing a conducive and supportive home base so students can focus entirely on their education, without worrying about where they are coming from. We believe every student deserves a safe, comfortable place to call home.</p>
+      </div>
+      <div class="mission-images">
+        <img src="images/IMG-20260608-WA0015.jpg" alt="Hostel Environment">
+      </div>
+    </div>
+
+    <div class="mission-grid reverse">
+      <div class="mission-text">
+        <p>Reliable 24/7 power supply through advanced solar and electrical solutions, keeping the hostel powered always. We invest in sustainable energy to ensure uninterrupted comfort for our residents.</p>
+      </div>
+      <div class="mission-images">
+        <img src="images/building4.png" alt="Solar Power Installation">
+        <img src="images/building5.png" alt="Electrical Infrastructure">
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="content-section">
+    <h2 class="section-title">Prioritize Our Students</h2>
+    <p class="section-subtitle">Channels to make complaints — real feedback from real residents</p>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <p class="testimonial-text">I made a complaint to the hostel management concerning my bed that I was using in the hostel. The next day I received a replacement. The response was swift and professional.</p>
+        <p class="testimonial-author">Ebube Oliver — 200 Level</p>
+      </div>
+      <div class="testimonial">
+        <p class="testimonial-text">There was an electrical fault in my room, so I made a complaint about it and I was attended to immediately. The maintenance team is always on standby.</p>
+        <p class="testimonial-author">Oluwatosin Emmanuel — 300 Level</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <h2>Become a <em>Member</em></h2>
+    <p>Secure your spot in our vibrant community and experience the comfort and convenience of living in our hostel.</p>
+    <div class="cta-btns">
+      <a href="apply.html" class="btn-primary">Apply for a Room →</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 <span>Yabatech Student Hostel</span> · All rights reserved · Lagos, Nigeria</p>
+  </footer>
+
+  <script>
+    const menuBar = document.getElementById("menu-bar");
+    const menu = document.getElementById("menu");
+    menuBar.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>
