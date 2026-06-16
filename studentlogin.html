@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login — YabaTech Hostel</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<div class="wrapper">
+
+  <a href="index.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Back to Website
+  </a>
+
+  <div class="card">
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login', this)">
+        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+      </button>
+      <button class="tab-btn" onclick="switchTab('register', this)">
+        <i class="fa-solid fa-user-plus"></i> Register
+      </button>
+    </div>
+
+    <!-- ══ LOGIN PANEL ══ -->
+    <div class="panel active" id="panel-login">
+
+      <div class="panel-header">
+        <div class="panel-icon">🎓</div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to your yabatech hostel student account</p>
+      </div>
+
+      <div class="banner error" id="loginError">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>Invalid email/username or password. Please try again.</span>
+      </div>
+
+      <div class="form-group">
+        <label>Email or Username</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-user icon-left"></i>
+          <input type="text" id="loginIdentifier" placeholder="your@email.com or username"/>
+        </div>
+        <div class="field-error" id="loginIdentifierError">Please enter your email or username.</div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <input type="password" id="loginPassword" placeholder="Enter your password"/>
+          <button class="toggle-pw" onclick="togglePw('loginPassword', this)" type="button">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+        <div class="field-error" id="loginPasswordError">Please enter your password.</div>
+      </div>
+
+      <div class="options-row">
+        <label class="remember">
+          <input type="checkbox"/> Keep me signed in
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <button class="submit-btn" id="loginBtn" onclick="handleLogin()">
+        Sign In
+      </button>
+
+      <div class="panel-footer" style="margin-top:1rem;">
+        Don't have an account?
+        <a href="#" onclick="switchTab('register', document.querySelectorAll('.tab-btn')[1])">Register here</a>
+      </div>
+
+      <div class="divider"><span>or</span></div>
+
+      <div class="panel-footer">
+        Admin? <a href="adminlogin.html">Admin Login →</a>
+      </div>
+
+    </div>
+
+    <!-- ══ REGISTER PANEL ══ -->
+    <div class="panel" id="panel-register">
+
+      <!-- success screen -->
+      <div class="success-screen" id="registerSuccess">
+        <div class="success-icon">🎉</div>
+        <h2>Registration Successful!</h2>
+        <p>Your student account has been created.<br/>
+        You can now sign in with your email or username.</p>
+        <button class="submit-btn"
+          onclick="switchTab('login', document.querySelectorAll('.tab-btn')[0])"
+          style="max-width:220px;margin:0 auto;">
+          Go to Sign In →
+        </button>
+      </div>
+
+      <!-- register form -->
+      <div id="registerForm">
+
+        <div class="panel-header">
+          <div class="panel-icon">✨</div>
+          <h2>Create Account</h2>
+          <p>Register as a GreenLeaf student resident</p>
+        </div>
+
+        <div class="banner error" id="registerError">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="registerErrorMsg">Please fill in all required fields.</span>
+        </div>
+
+        <!-- Name -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name <span style="color:red">*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-user icon-left"></i>
+              <input type="text" id="reg-fname" placeholder="Amara"/>
+            </div>
+            <div class="field-error" id="err-fname">Required.</div>
+          </div>
+          <div class="form-group">
+            <label>Last Name <span style="color:red">*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-user icon-left"></i>
+              <input type="text" id="reg-lname" placeholder="Okafor"/>
+            </div>
+            <div class="field-error" id="err-lname">Required.</div>
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+          <label>Username <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-at icon-left"></i>
+            <input type="text" id="reg-username" placeholder="amara_okafor" oninput="checkUsername(this)"/>
+          </div>
+          <div class="field-error" id="err-username">Username is required.</div>
+        </div>
+
+        <!-- Matric Number -->
+        <div class="form-group">
+          <label>Matric Number <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-id-card icon-left"></i>
+            <input type="text" id="reg-matric" placeholder="e.g. YCT/ND/22/12345"/>
+          </div>
+          <div class="field-error" id="err-matric">Matric number is required.</div>
+        </div>
+
+        <!-- Level + Gender -->
+        <div class="form-row">
+          <div class="form-group">
+            <label>Level <span style="color:red">*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-graduation-cap icon-left"></i>
+              <select id="reg-level">
+                <option value="">Select…</option>
+                <option>100 Level</option>
+                <option>200 Level</option>
+                <option>300 Level</option>
+                <option>400 Level</option>
+                <option>ND 1</option>
+                <option>ND 2</option>
+                <option>HND 1</option>
+                <option>HND 2</option>
+                <option>Postgraduate</option>
+              </select>
+            </div>
+            <div class="field-error" id="err-level">Please select your level.</div>
+          </div>
+          <div class="form-group">
+            <label>Gender <span style="color:red">*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-venus-mars icon-left"></i>
+              <select id="reg-gender">
+                <option value="">Select…</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </div>
+            <div class="field-error" id="err-gender">Please select gender.</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label>Email Address <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-envelope icon-left"></i>
+            <input type="email" id="reg-email" placeholder="amara@example.com"/>
+          </div>
+          <div class="field-error" id="err-email">Please enter a valid email.</div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label>Phone Number <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-phone icon-left"></i>
+            <input type="tel" id="reg-phone" placeholder="+234 800 000 0000"/>
+          </div>
+          <div class="field-error" id="err-phone">Please enter your phone number.</div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label>Password <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock icon-left"></i>
+            <input type="password" id="reg-password"
+              placeholder="Create a strong password"
+              oninput="checkStrength(this)"/>
+            <button class="toggle-pw" onclick="togglePw('reg-password', this)" type="button">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+          <div class="strength-text" id="strengthText">Enter a password</div>
+          <div class="field-error" id="err-password">Password must be at least 6 characters.</div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label>Confirm Password <span style="color:red">*</span></label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock icon-left"></i>
+            <input type="password" id="reg-confirm" placeholder="Repeat your password"/>
+            <button class="toggle-pw" onclick="togglePw('reg-confirm', this)" type="button">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <div class="field-error" id="err-confirm">Passwords do not match.</div>
+        </div>
+
+        <!-- Terms -->
+        <label class="terms-row">
+          <input type="checkbox" id="reg-terms"/>
+          I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
+        </label>
+        <div class="field-error" id="err-terms"
+          style="margin-top:-0.8rem;margin-bottom:1rem;">
+          You must accept the terms to continue.
+        </div>
+
+        <button class="submit-btn" id="registerBtn" onclick="handleRegister()">
+          Create Student Account
+        </button>
+
+        <div class="panel-footer" style="margin-top:1rem;">
+          Already have an account?
+          <a href="#" onclick="switchTab('login', document.querySelectorAll('.tab-btn')[0])">Sign in here</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* ── Tab switcher ── */
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+
+  /* ── Password toggle ── */
+  function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const icon  = btn.querySelector('i');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+  }
+
+  /* ── Password strength checker ── */
+  function checkStrength(input) {
+    const val  = input.value;
+    const fill = document.getElementById('strengthFill');
+    const text = document.getElementById('strengthText');
+    let strength = 0;
+    if (val.length >= 6)               strength++;
+    if (val.length >= 10)              strength++;
+    if (/[A-Z]/.test(val))             strength++;
+    if (/[0-9]/.test(val))             strength++;
+    if (/[^A-Za-z0-9]/.test(val))      strength++;
+    const levels = [
+      { pct: '0%',   color: '#e5e7eb', label: 'Enter a password' },
+      { pct: '25%',  color: '#ef4444', label: 'Weak' },
+      { pct: '50%',  color: '#f59e0b', label: 'Fair' },
+      { pct: '75%',  color: '#3b82f6', label: 'Good' },
+      { pct: '100%', color: '#22c55e', label: 'Strong' },
+    ];
+    const lvl = levels[Math.min(strength, 4)];
+    fill.style.width      = lvl.pct;
+    fill.style.background = lvl.color;
+    text.textContent      = lvl.label;
+  }
+
+  /* ── Username availability mock ── */
+  function checkUsername(input) { /* no-op — backend would handle this */ }
+
+  /* ══ SIGN IN ══ */
+  function handleLogin() {
+    const identifier = document.getElementById('loginIdentifier').value.trim();
+    const password   = document.getElementById('loginPassword').value.trim();
+    const errBanner  = document.getElementById('loginError');
+
+    // Hide errors
+    document.getElementById('loginIdentifierError').style.display = 'none';
+    document.getElementById('loginPasswordError').style.display   = 'none';
+    errBanner.classList.remove('show');
+
+    let valid = true;
+    if (!identifier) {
+      document.getElementById('loginIdentifierError').style.display = 'block';
+      valid = false;
+    }
+    if (!password) {
+      document.getElementById('loginPasswordError').style.display = 'block';
+      valid = false;
+    }
+    if (!valid) return;
+
+    // ── Derive a display name from what they typed ──
+    // If it looks like an email, use the part before @
+    // Otherwise use the username as-is, capitalised
+    let rawName = identifier.includes('@')
+      ? identifier.split('@')[0]
+      : identifier;
+
+    // Replace underscores/dots with spaces, capitalise each word
+    const displayName = rawName
+      .replace(/[_\.]/g, ' ')
+      .split(' ')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(' ');
+
+    // ── Save to localStorage & redirect ──
+    localStorage.setItem('studentName',     displayName);
+    localStorage.setItem('studentInitial',  displayName.charAt(0).toUpperCase());
+    localStorage.setItem('studentMatric',   ''); // not available on login, only register
+    localStorage.setItem('studentLoggedIn', 'true');
+
+    window.location.href = 'student-dashboard.html';
+  }
+
+  /* ══ REGISTER ══ */
+  function handleRegister() {
+    const fname    = document.getElementById('reg-fname').value.trim();
+    const lname    = document.getElementById('reg-lname').value.trim();
+    const username = document.getElementById('reg-username').value.trim();
+    const matric   = document.getElementById('reg-matric').value.trim();
+    const level    = document.getElementById('reg-level').value;
+    const gender   = document.getElementById('reg-gender').value;
+    const email    = document.getElementById('reg-email').value.trim();
+    const phone    = document.getElementById('reg-phone').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const confirm  = document.getElementById('reg-confirm').value;
+    const terms    = document.getElementById('reg-terms').checked;
+
+    // Hide all errors first
+    ['fname','lname','username','matric','level','gender','email','phone','password','confirm','terms']
+      .forEach(id => document.getElementById('err-' + id).style.display = 'none');
+    document.getElementById('registerError').classList.remove('show');
+
+    let valid = true;
+    if (!fname)              { document.getElementById('err-fname').style.display    = 'block'; valid = false; }
+    if (!lname)              { document.getElementById('err-lname').style.display    = 'block'; valid = false; }
+    if (!username)           { document.getElementById('err-username').style.display = 'block'; valid = false; }
+    if (!matric)             { document.getElementById('err-matric').style.display   = 'block'; valid = false; }
+    if (!level)              { document.getElementById('err-level').style.display    = 'block'; valid = false; }
+    if (!gender)             { document.getElementById('err-gender').style.display   = 'block'; valid = false; }
+    if (!email)              { document.getElementById('err-email').style.display    = 'block'; valid = false; }
+    if (!phone)              { document.getElementById('err-phone').style.display    = 'block'; valid = false; }
+    if (password.length < 6) { document.getElementById('err-password').style.display = 'block'; valid = false; }
+    if (password !== confirm){ document.getElementById('err-confirm').style.display  = 'block'; valid = false; }
+    if (!terms)              { document.getElementById('err-terms').style.display    = 'block'; valid = false; }
+    if (!valid) return;
+
+    // ── Save full registration data to localStorage ──
+    const fullName = fname.charAt(0).toUpperCase() + fname.slice(1).toLowerCase()
+                   + ' '
+                   + lname.charAt(0).toUpperCase() + lname.slice(1).toLowerCase();
+
+    localStorage.setItem('studentName',     fullName);
+    localStorage.setItem('studentInitial',  fullName.charAt(0).toUpperCase());
+    localStorage.setItem('studentMatric',   matric);
+    localStorage.setItem('studentLevel',    level);
+    localStorage.setItem('studentGender',   gender);
+    localStorage.setItem('studentEmail',    email);
+    localStorage.setItem('studentPhone',    phone);
+    localStorage.setItem('studentUsername', username);
+    localStorage.setItem('studentFname',    fname.charAt(0).toUpperCase() + fname.slice(1).toLowerCase());
+    localStorage.setItem('studentLname',    lname.charAt(0).toUpperCase() + lname.slice(1).toLowerCase());
+    localStorage.setItem('studentLoggedIn', 'true');
+
+    // Show success screen
+    document.getElementById('registerForm').style.display    = 'none';
+    document.getElementById('registerSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>

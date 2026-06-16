@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — Yabatech Student Hostel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #c9952a;
+      --gold-light: #e8b84b;
+      --gold-pale:  #f5e6c0;
+      --gold-shine: #fdf3dc;
+      --gold-dark:  #8a6418;
+      --white:      #ffffff;
+      --off-white:  #fdfaf4;
+      --text:       #1c1408;
+      --muted:      #7a6840;
+      --border:     #e8dcc4;
+      --radius:     14px;
+    }
+
+    body { font-family: 'Outfit', sans-serif; background: var(--off-white); color: var(--text); }
+
+    /* ── NAV ──────────────────────────────────────── */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 5%; background: var(--white);
+      border-bottom: 2px solid var(--gold-pale);
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 2px 18px rgba(201,149,42,0.08);
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: var(--gold-dark); text-decoration: none; }
+    .logo span { color: var(--gold); }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; align-items: center; }
+    nav ul a { text-decoration: none; color: var(--muted); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+    nav ul a:hover, nav ul a.active { color: var(--gold); font-weight: 600; }
+    .nav-btn {
+      background: var(--gold); color: var(--white) !important;
+      padding: 0.5rem 1.3rem; border-radius: 6px; font-weight: 700 !important;
+      box-shadow: 0 2px 10px rgba(201,149,42,0.3); transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--gold-dark); }
+
+    /* ── GOLD DIVIDER ─────────────────────────────── */
+    .gold-divider {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+    }
+
+    /* ── PAGE HERO ────────────────────────────────── */
+    .page-hero {
+      background: linear-gradient(135deg, #1c1408 0%, #3d2b0a 55%, #5c3f0e 100%);
+      padding: 4.5rem 5%; text-align: center; color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 100% at 50% 110%, rgba(201,149,42,0.22) 0%, transparent 70%),
+        repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(201,149,42,0.025) 40px, rgba(201,149,42,0.025) 41px);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,149,42,0.2); border: 1px solid rgba(201,149,42,0.4);
+      color: var(--gold-light); font-size: 0.75rem; font-weight: 600;
+      padding: 0.3rem 1rem; border-radius: 20px; margin-bottom: 1rem;
+      letter-spacing: 0.08em; text-transform: uppercase; position: relative;
+    }
+    .page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      margin-bottom: 0.6rem; position: relative; font-weight: 700;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--gold-light); }
+    .page-hero p { opacity: 0.74; font-size: 0.97rem; position: relative; }
+
+    /* ── CONTACT INFO STRIP ───────────────────────── */
+    .info-strip {
+      background: var(--white);
+      border-bottom: 2px solid var(--gold-pale);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .info-strip-item {
+      display: flex; align-items: center; gap: 0.9rem;
+      padding: 1.4rem 1.6rem;
+      border-right: 1px solid var(--gold-pale);
+      transition: background 0.2s;
+    }
+    .info-strip-item:last-child { border-right: none; }
+    .info-strip-item:hover { background: var(--gold-shine); }
+    .strip-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--gold-shine); border: 1px solid var(--gold-pale);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 0.95rem; flex-shrink: 0;
+    }
+    .strip-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .strip-value { font-size: 0.87rem; font-weight: 600; color: var(--text); margin-top: 0.1rem; }
+
+    /* ── MAIN SECTION ─────────────────────────────── */
+    .contact-section { padding: 4rem 5%; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 880px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* ── SECTION HEADER ───────────────────────────── */
+    .section-header { margin-bottom: 2rem; }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem; font-weight: 700; margin-bottom: 0.4rem;
+    }
+    .section-header h2 span { color: var(--gold); }
+    .section-header p { font-size: 0.92rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CONTACT FORM ─────────────────────────────── */
+    .form-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2.2rem;
+      box-shadow: 0 4px 24px rgba(201,149,42,0.07);
+    }
+    .form-group { margin-bottom: 1.15rem; }
+    .form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group label {
+      display: block; font-size: 0.8rem; font-weight: 700;
+      margin-bottom: 0.38rem; color: var(--text); letter-spacing: 0.01em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 0.78rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 9px;
+      font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+      color: var(--text); background: var(--off-white);
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--gold);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(201,149,42,0.12);
+    }
+    .form-group textarea { height: 120px; resize: vertical; }
+    .submit-btn {
+      width: 100%; background: var(--gold); color: var(--white);
+      border: none; padding: 0.95rem; border-radius: 9px;
+      font-size: 0.97rem; font-weight: 700; cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      box-shadow: 0 2px 14px rgba(201,149,42,0.3);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .submit-btn:hover { background: var(--gold-dark); transform: translateY(-1px); box-shadow: 0 4px 22px rgba(201,149,42,0.4); }
+
+    /* Success message */
+    .form-success {
+      display: none; text-align: center; padding: 2.5rem 1rem;
+    }
+    .form-success .success-icon {
+      width: 70px; height: 70px; border-radius: 50%;
+      background: var(--gold-shine); border: 2px solid var(--gold-pale);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 1rem;
+    }
+    .form-success h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.4rem; color: var(--gold-dark); }
+    .form-success p  { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── RIGHT COLUMN ─────────────────────────────── */
+    .right-col { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    /* Info card */
+    .info-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .info-card-head {
+      background: linear-gradient(135deg, #1c1408, #3d2b0a);
+      padding: 1.1rem 1.4rem; color: var(--white);
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .info-card-head i { color: var(--gold-light); }
+    .info-card-head h3 { font-family: 'Playfair Display', serif; font-size: 1rem; }
+    .info-card-body { padding: 1.3rem 1.4rem; }
+
+    /* Contact detail row */
+    .contact-detail {
+      display: flex; gap: 0.9rem; align-items: flex-start;
+      padding: 0.85rem 0; border-bottom: 1px solid var(--gold-pale);
+    }
+    .contact-detail:last-child { border-bottom: none; padding-bottom: 0; }
+    .cd-icon {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: var(--gold-shine); border: 1px solid var(--gold-pale);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 0.85rem; flex-shrink: 0;
+    }
+    .cd-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .cd-value { font-size: 0.87rem; font-weight: 600; color: var(--text); margin-top: 0.1rem; line-height: 1.5; }
+    .cd-value a { color: var(--gold-dark); text-decoration: none; }
+    .cd-value a:hover { text-decoration: underline; }
+
+    /* Office hours table */
+    .hours-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.65rem 0; border-bottom: 1px solid var(--gold-pale);
+      font-size: 0.85rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day   { font-weight: 600; color: var(--text); }
+    .hours-time  { color: var(--muted); }
+    .hours-open  { color: #16a34a; font-weight: 700; font-size: 0.75rem; }
+    .hours-closed{ color: #dc2626; font-weight: 700; font-size: 0.75rem; }
+
+    /* Social links */
+    .social-row { display: flex; gap: 0.7rem; margin-top: 0.8rem; flex-wrap: wrap; }
+    .social-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem; border-radius: 8px;
+      border: 1.5px solid var(--border); background: var(--white);
+      font-size: 0.8rem; font-weight: 600; color: var(--text);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold-dark); background: var(--gold-shine); }
+    .social-btn i { font-size: 1rem; }
+    .fa-whatsapp { color: #25d366; }
+    .fa-instagram { color: #e1306c; }
+    .fa-facebook  { color: #1877f2; }
+    .fa-x-twitter { color: #000; }
+
+    /* Staff cards */
+    .staff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .staff-card {
+      background: var(--gold-shine); border: 1px solid var(--gold-pale);
+      border-radius: 10px; padding: 0.9rem 1rem;
+      display: flex; align-items: center; gap: 0.7rem;
+    }
+    .staff-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700; flex-shrink: 0;
+    }
+    .staff-name  { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+    .staff-role  { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── MAP SECTION ──────────────────────────────── */
+    .map-section { background: var(--white); padding: 4rem 5%; border-top: 2px solid var(--gold-pale); }
+    .map-header  { text-align: center; margin-bottom: 2rem; }
+    .map-header h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; margin-bottom: 0.4rem; }
+    .map-header h2 span { color: var(--gold); }
+    .map-header p  { font-size: 0.92rem; color: var(--muted); }
+    .map-wrap {
+      border-radius: var(--radius); overflow: hidden;
+      border: 2px solid var(--gold-pale);
+      box-shadow: 0 8px 32px rgba(201,149,42,0.1);
+      max-width: 1100px; margin: 0 auto;
+    }
+    .map-wrap iframe { width: 100%; height: 420px; display: block; border: none; }
+
+    /* ── FAQ TEASER ───────────────────────────────── */
+    .faq-teaser {
+      background: linear-gradient(135deg, var(--gold-shine), #fffdf5);
+      border-top: 2px solid var(--gold-pale);
+      padding: 3rem 5%; text-align: center;
+    }
+    .faq-teaser h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .faq-teaser p  { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.5rem; }
+    .faq-btn {
+      display: inline-block; background: var(--gold); color: var(--white);
+      padding: 0.8rem 2rem; border-radius: 8px; font-weight: 700;
+      text-decoration: none; font-family: 'Outfit', sans-serif;
+      box-shadow: 0 2px 12px rgba(201,149,42,0.3);
+      transition: background 0.2s;
+    }
+    .faq-btn:hover { background: var(--gold-dark); }
+
+    /* ── CTA STRIP ────────────────────────────────── */
+    .cta-strip {
+      background: linear-gradient(135deg, #1c1408 0%, #3d2b0a 60%, #5c3f0e 100%);
+      text-align: center; padding: 4rem 5%; color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .cta-strip::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(201,149,42,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.6rem; position: relative; }
+    .cta-strip h2 em { font-style: italic; color: var(--gold-light); }
+    .cta-strip p  { opacity: 0.75; margin-bottom: 2rem; position: relative; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .cta-btn {
+      background: var(--gold); color: var(--white); padding: 0.9rem 2.2rem;
+      border-radius: 8px; text-decoration: none; font-weight: 700;
+      box-shadow: 0 4px 20px rgba(201,149,42,0.4); transition: background 0.2s;
+      font-family: 'Outfit', sans-serif;
+    }
+    .cta-btn:hover { background: var(--gold-light); }
+    .cta-btn-outline {
+      border: 2px solid rgba(232,184,75,0.5); color: var(--gold-light);
+      padding: 0.9rem 2.2rem; border-radius: 8px; text-decoration: none;
+      font-weight: 600; transition: border-color 0.2s, color 0.2s;
+      font-family: 'Outfit', sans-serif;
+    }
+    .cta-btn-outline:hover { border-color: var(--gold-light); color: var(--white); }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: #0e0a02; color: rgba(255,255,255,0.45);
+      text-align: center; padding: 1.6rem; font-size: 0.85rem;
+      border-top: 2px solid #3d2b0a;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .info-strip { grid-template-columns: 1fr 1fr; }
+      .form-row   { grid-template-columns: 1fr; }
+      .staff-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .info-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Yabatech <span>Hostel</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rooms.html">Rooms</a></li>
+    <li><a href="facilities.html">Facilities</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+    <li><a href="apply.html" class="nav-btn">Apply Now</a></li>
+  </ul>
+</nav>
+<div class="gold-divider"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-badge">📬 Get in Touch</div>
+  <h1>We're Here to <em>Help</em></h1>
+  <p>Have a question about rooms, payments, or facilities? Reach out — our team responds within 24 hours.</p>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-item">
+    <div class="strip-icon"><i class="fa-solid fa-location-dot"></i></div>
+    <div>
+      <div class="strip-label">Address</div>
+      <div class="strip-value">Hussey Rd, Abule Ijesha, Lagos</div>
+    </div>
+  </div>
+  <div class="info-strip-item">
+    <div class="strip-icon"><i class="fa-solid fa-phone"></i></div>
+    <div>
+      <div class="strip-label">Phone</div>
+      <div class="strip-value">+234 808 055 2235 <br>+234 913 249 7711</div>
+    </div>
+  </div>
+  <div class="info-strip-item">
+    <div class="strip-icon"><i class="fa-solid fa-envelope"></i></div>
+    <div>
+      <div class="strip-label">Email</div>
+      <div class="strip-value">hostel@yabatech.edu.ng</div>
+    </div>
+  </div>
+  <div class="info-strip-item">
+    <div class="strip-icon"><i class="fa-solid fa-clock"></i></div>
+    <div>
+      <div class="strip-label">Office Hours</div>
+      <div class="strip-value">Mon – Fri: 8 AM – 5 PM</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTACT SECTION -->
+<section class="contact-section">
+  <div class="contact-grid">
+
+    <!-- LEFT: CONTACT FORM -->
+    <div>
+      <div class="section-header">
+        <h2>Send Us a <span>Message</span></h2>
+        <p>Fill in the form and our hostel team will get back to you within 1–2 business days.</p>
+      </div>
+
+      <div class="form-card">
+
+        <!-- Form -->
+        <div id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" id="fname" placeholder="e.g. Amara"/>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" id="lname" placeholder="e.g. Okafor"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com"/>
+          </div>
+
+          <div class="form-group">
+            <label>Phone Number <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+            <input type="tel" id="phone" placeholder="+234 800 000 0000"/>
+          </div>
+
+          <div class="form-group">
+            <label>Subject</label>
+            <select id="subject">
+              <option value="">Select a topic…</option>
+              <option>Room Application Enquiry</option>
+              <option>Payment / Fees</option>
+              <option>Room Allocation</option>
+              <option>Maintenance / Repairs</option>
+              <option>Rules &amp; Policies</option>
+              <option>General Enquiry</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="message" placeholder="Write your message here…"></textarea>
+          </div>
+
+          <button class="submit-btn" onclick="sendMessage()">
+            <i class="fa-solid fa-paper-plane"></i> &nbsp;Send Message
+          </button>
+        </div>
+
+        <!-- Success state -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">✅</div>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. Our team will reply to <strong id="successEmail"></strong> within 1–2 business days.</p>
+          <button class="submit-btn" style="margin-top:1.5rem;max-width:200px;" onclick="resetForm()">Send Another</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <!-- Contact Details -->
+      <div class="info-card">
+        <div class="info-card-head">
+          <i class="fa-solid fa-address-book"></i>
+          <h3>Contact Details</h3>
+        </div>
+        <div class="info-card-body">
+          <div class="contact-detail">
+            <div class="cd-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <div class="cd-label">Address</div>
+              <div class="cd-value">Yaba College of Technology<br/>Hussey Rd, Abule Ijesha<br/>Lagos 100001, Nigeria</div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="cd-icon"><i class="fa-solid fa-phone"></i></div>
+            <div>
+              <div class="cd-label">Main Office</div>
+              <div class="cd-value"><a href="tel:+2348080552235">+234 808 055 2235</a></div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="cd-icon"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <div class="cd-label">WhatsApp</div>
+              <div class="cd-value"><a href="https://wa.me/2348080552235" target="_blank">+234 808 055 2235</a></div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="cd-icon"><i class="fa-solid fa-envelope"></i></div>
+            <div>
+              <div class="cd-label">General Enquiries</div>
+              <div class="cd-value"><a href="index.html">hostel@yabatech.edu.ng</a></div>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="cd-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+            <div>
+              <div class="cd-label">Applications &amp; Bookings</div>
+              <div class="cd-value"><a href="apply.html">apply.hostel@yabatech.edu.ng</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office Hours -->
+      <div class="info-card">
+        <div class="info-card-head">
+          <i class="fa-solid fa-clock"></i>
+          <h3>Office Hours</h3>
+        </div>
+        <div class="info-card-body">
+          <div class="hours-row">
+            <span class="hours-day">Monday – Friday</span>
+            <span><span class="hours-open">● Open</span> &nbsp;8:00 AM – 5:00 PM</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Saturday</span>
+            <span><span class="hours-open">● Open</span> &nbsp;9:00 AM – 1:00 PM</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Sunday</span>
+            <span><span class="hours-closed">● Closed</span></span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Public Holidays</span>
+            <span><span class="hours-closed">● Closed</span></span>
+          </div>
+          <div style="margin-top:0.9rem;background:var(--gold-shine);border:1px solid var(--gold-pale);border-left:4px solid var(--gold);border-radius:8px;padding:0.8rem 1rem;font-size:0.8rem;color:var(--gold-dark);line-height:1.6;">
+            <i class="fa-solid fa-circle-info"></i> &nbsp;For emergencies outside office hours, call <strong>+234 808 055 2235</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Staff -->
+      <div class="info-card">
+        <div class="info-card-head">
+          <i class="fa-solid fa-users"></i>
+          <h3>Key Contacts</h3>
+        </div>
+        <div class="info-card-body">
+          <div class="staff-grid">
+            <div class="staff-card">
+              <div class="staff-avatar">HM</div>
+              <div>
+                <div class="staff-name">Mr. Francis O.</div>
+                <div class="staff-role">Hostel Manager</div>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">FO</div>
+              <div>
+                <div class="staff-name">Mr. Oluyisola J</div>
+                <div class="staff-role">Finance Officer</div>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">MO</div>
+              <div>
+                <div class="staff-name">Mr. Olanrewaju V.</div>
+                <div class="staff-role">Maintenance Officer</div>
+              </div>
+            </div>
+            <div class="staff-card">
+              <div class="staff-avatar">SO</div>
+              <div>
+                <div class="staff-name">Mrs. Nwosu C.</div>
+                <div class="staff-role">Student Affairs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media -->
+      <div class="info-card">
+        <div class="info-card-head">
+          <i class="fa-solid fa-share-nodes"></i>
+          <h3>Follow Us</h3>
+        </div>
+        <div class="info-card-body">
+          <p style="font-size:0.83rem;color:var(--muted);margin-bottom:0.8rem;">Stay updated with hostel news and announcements.</p>
+          <div class="social-row">
+            <a href="https://wa.me/2348080552235" class="social-btn"><i class="fa-brands fa-whatsapp fa-whatsapp"></i> WhatsApp</a>
+            <a href="https://instagram.com/yabatech_hostel" class="social-btn"><i class="fa-brands fa-instagram fa-instagram"></i> Instagram</a>
+            <a href="https://facebook.com/yabatech_hostel" class="social-btn"><i class="fa-brands fa-facebook fa-facebook"></i> Facebook</a>
+            <a href="https://twitter.com/yabatech_hostel" class="social-btn"><i class="fa-brands fa-x-twitter fa-x-twitter"></i> X / Twitter</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<div class="map-section">
+  <div class="map-header">
+    <h2>Find <span>Us</span></h2>
+    <p>Yaba College of Technology, Hussey Rd, Abule Ijesha, Lagos 100001</p>
+  </div>
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4523!2d3.3702!3d6.5149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8c5e0eee3fa5%3A0x7f7c1e5fbd9cfc7a!2sYaba%20College%20of%20Technology!5e0!3m2!1sen!2sng!4v1"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
+<!-- FAQ TEASER -->
+<div class="faq-teaser">
+  <h3>Looking to Survey?</h3>
+  <p>Check our About us page for more informations about rooms, payments, and hostel life.</p>
+  <a href="about.html" class="faq-btn">Visit FAQ Page →</a>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Ready to <em>Apply?</em></h2>
+  <p>Secure your room for the 2026/2027 academic session today.</p>
+  <div class="cta-btns">
+    <a href="apply.html" class="cta-btn">Apply for a Room →</a>
+    <a href="rooms.html" class="cta-btn-outline">View Room Types</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 <span>Yabatech Student Hostel</span> · Hussey Rd, Abule Ijesha, Lagos · All rights reserved
+</footer>
+
+<script>
+  function sendMessage() {
+    const fname   = document.getElementById('fname').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value.trim();
+
+    if (!fname)   { alert('Please enter your first name.');  return; }
+    if (!email)   { alert('Please enter your email address.'); return; }
+    if (!subject) { alert('Please select a subject.');        return; }
+    if (!message) { alert('Please write your message.');      return; }
+
+    document.getElementById('successEmail').textContent = email;
+    document.getElementById('contactForm').style.display  = 'none';
+    document.getElementById('formSuccess').style.display  = 'block';
+  }
+
+  function resetForm() {
+    document.getElementById('fname').value    = '';
+    document.getElementById('lname').value    = '';
+    document.getElementById('email').value    = '';
+    document.getElementById('phone').value    = '';
+    document.getElementById('subject').value  = '';
+    document.getElementById('message').value  = '';
+    document.getElementById('contactForm').style.display = 'block';
+    document.getElementById('formSuccess').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

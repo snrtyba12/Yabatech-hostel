@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — Yabatech Student Hostel</title>
+  <link rel="stylesheet" href="stylesheet.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <h2 class="hostel">Yabatech <span>Hostel</span></h2>
+    <ul id="menu">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="facilities.html">Facilities</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><button class="nav-btn"><a href="studentlogin.html">Sign In</a></button></li>
+    </ul>
+    <div class="menu-bar" id="menu-bar">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+  </header>
+  <div class="gold-divider"></div>
+
+  <!-- Hero -->
+  <section class="home-hero">
+    <h2>A Place Like Home</h2>
+    <p>Welcome to a place of comfort — every room is a home away from home. Everything you need, right on campus.</p>
+    <div class="hero-image">
+      <img src="images/hostel01.png" alt="Yabatech Hostel Building">
+    </div>
+  </section>
+
+  <!-- About Snippet -->
+  <section class="about-snippet">
+    <p>Yabatech Hostel is a place where students can find comfort and a sense of belonging while pursuing their academic journey. We understand the importance of a supportive and inclusive environment for students to thrive academically and personally. Our hostel is designed to provide a safe and welcoming space for students from diverse backgrounds, fostering a sense of community and camaraderie. We offer a range of amenities and services to ensure that our residents have a comfortable and enjoyable living experience. <a href="about.html" class="button-link">Learn More →</a></p>
+  </section>
+
+  <!-- Stats Banner -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">600+</div>
+      <div class="stat-label">Students Housed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Room Types</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">Electricity</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">99%</div>
+      <div class="stat-label">Satisfaction Rate</div>
+    </div>
+  </div>
+
+  <!-- Image Gallery -->
+  <section class="img-section">
+    <div class="image-item">
+      <img src="images/hostel2.jpg" alt="Hostel View 1">
+    </div>
+    <div class="image-item">
+      <img src="images/hostel3.png" alt="Hostel View 2">
+    </div>
+    <div class="image-item">
+      <img src="images/hostel4.png" alt="Hostel View 3">
+    </div>
+    <div class="image-item">
+      <img src="images/hostel5.jpg" alt="Hostel View 4">
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="content-section">
+    <h2 class="section-title">Why Choose Us?</h2>
+    <p class="section-subtitle">Comfortable living environment with world-class amenities</p>
+    <div class="features-grid">
+      <div class="feature">
+        <i class="fa-solid fa-bolt"></i>
+        <h3>24/7 Power Supply</h3>
+        <p>We run a backup solar system to ensure continuous power supply during outages, providing a conducive environment for studying and relaxation without interruption.</p>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-wifi"></i>
+        <h3>High Speed Internet</h3>
+        <p>We provide high-speed internet connectivity throughout the hostel, ensuring students can stay connected for their studies and personal use.</p>
+      </div>
+      <div class="feature">
+        <i class="fa-solid fa-lock"></i>
+        <h3>24/7 Security</h3>
+        <p>We have a dedicated security team that patrols the hostel round the clock, ensuring the safety and well-being of all residents. CCTV cameras are installed throughout the premises for added security.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <h2>Interested? <em>Apply Now</em></h2>
+    <p>Secure your spot in our vibrant community and experience the comfort and convenience of living in our hostel.</p>
+    <div class="cta-btns">
+      <a href="apply.html" class="btn-primary">Apply Now!</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 <span>Yabatech Student Hostel</span> · All rights reserved · Lagos, Nigeria</p>
+  </footer>
+
+  <script>
+    const menuBar = document.getElementById("menu-bar");
+    const menu = document.getElementById("menu");
+    menuBar.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>
