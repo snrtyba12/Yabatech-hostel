@@ -196,9 +196,9 @@
     return { 'Content-Type':'application/json', 'Authorization': token ? `Bearer ${token}` : '' };
   }
 
-  if (!localStorage.getItem('adminLoggedIn') || !localStorage.getItem('adminToken')) {
-    window.location.href = 'adminlogin.html';
-  }
+  // if (!localStorage.getItem('adminLoggedIn') || !localStorage.getItem('adminToken')) {
+  //   window.location.href = 'adminlogin.html';
+  // }
 
   const adminName = localStorage.getItem('adminName') || 'Admin';
   const adminInitial = localStorage.getItem('adminInitial') || 'A';
